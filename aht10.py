@@ -41,7 +41,6 @@ def read_values(i2c):
 def convert(i2c):
     data = read_values(i2c)
     # bt shifting of the binay data to rebuild the information
-    print(data[3], data[4], data[5])
     bin_temp = ((data[3] & 0x0F) << 16) | (data[4] << 8) | data[5]
     bin_rh= ((data[1] << 16) | (data[2] << 8) | data[3]) >> 4
     # decimal conversion and rounding
@@ -49,11 +48,19 @@ def convert(i2c):
     rh   = round(((bin_rh / 1048576) * 100), PRECISION)
     return temp, rh
 
+def detect_sensor(i2c):
+    sensor=i2c.scan()
+    if (int(sensor[0]) != 56):
+        print("AHT10 sensors not detected, check cabling\nQuitting.")
+        sys.exit(2)
+    return 0
+
 # setup the bus
 i2c = machine.I2C(0, scl=machine.Pin(1), sda=machine.Pin(0), freq=400000)
 
 # continuous reading
 while True:
+    detect_sensor(i2c)
     reading=convert(i2c)
     print('------------------------------------')
     print(f'Temperature: {reading[0]} °C')
