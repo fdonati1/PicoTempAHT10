@@ -5,7 +5,7 @@ Built used a Raspberry Pi Pico W and the AHT10 sensor.
 
 ## AHT10
 This seems to be a very common low-cost sensor, but with a decent precision.
-I have compared the readings with other commercial sensors I have at home and the readins where very similar.
+I have compared the readings with other commercial sensors I have at home and the readings were very similar.
 
 Unfortunately the documentation is quite poor, and certain datasheets are terrible (bad formatting, with some parts written in Chinese), so it was difficult to understand how to read the values, and I helped myself looking at some C library available in other repositories.
 
